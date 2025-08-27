@@ -17,6 +17,9 @@ import lombok.*;
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PostRequest {
 
+    @Builder.Default
+    private Long boardId =1L;
+
     @NotBlank
     private String userName;
 

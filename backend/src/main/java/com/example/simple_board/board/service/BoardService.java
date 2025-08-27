@@ -21,4 +21,9 @@ public class BoardService {
 
         return boardRepository.save(entity);
     }
+
+    public BoardEntity view(Long id) {
+        // 일단 무조건 있다는 가정하에 바로 get() 사용
+        return boardRepository.findById(id).get();
+    }
 }
