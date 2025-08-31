@@ -3,8 +3,11 @@ package com.example.simple_board.post.service;
 import com.example.simple_board.board.db.BoardRepository;
 import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.db.PostRepository;
+import com.example.simple_board.post.model.PostDto;
 import com.example.simple_board.post.model.PostRequest;
 import com.example.simple_board.post.model.PostViewRequest;
+import com.example.simple_board.reply.model.ReplyDto;
+import com.example.simple_board.reply.service.ReplyConveter;
 import com.example.simple_board.reply.service.ReplyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final ReplyService replyService;
     private final BoardRepository boardRepository;
+    private final PostConveter postConveter;
 
     public PostEntity create(
             PostRequest postRequest
@@ -45,9 +48,8 @@ public class PostService {
      * @param postViewRequest
      * @return
      */
-    public PostEntity view(@Valid PostViewRequest postViewRequest) {
-
-        return postRepository.findFirstByIdAndStatusOrderByIdDesc(postViewRequest.getPostId(), "REGISTERED")
+    public PostDto view(@Valid PostViewRequest postViewRequest) {
+        return  postRepository.findFirstByIdAndStatusOrderByIdDesc(postViewRequest.getPostId(), "REGISTERED")
                 .map(it -> {
                     // entity 존재할 때
                     if (!it.getPassword().equals(postViewRequest.getPassword())) {
@@ -55,15 +57,11 @@ public class PostService {
 
                         throw new RuntimeException(String.format(format, it.getPassword(), postViewRequest.getPassword()));
                     }
-
-                    // 답변글도 같이
-                    var replyList = replyService.findAllByPostId(it.getId());
-                    it.setReplyList(replyList);
-
-                    return it;
+                    return postConveter.toDto(it);
                 }).orElseThrow(() -> {
                     return new RuntimeException("해당 게시글이 존재 하지 않습니다 :" + postViewRequest.getPostId());
                 });
+
     }
 
     public List<PostEntity> all() {

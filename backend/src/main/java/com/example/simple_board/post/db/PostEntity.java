@@ -49,9 +49,8 @@ public class PostEntity {
 
     private LocalDateTime postedAt;
 
-
-    @Transient // 컬럼으로 인지하지않겠다는 의미
     @Builder.Default //Builder는 초기화값을 무시해서 어노테이션을 사용하여 기본값을 유지한다.
+    @OneToMany(mappedBy = "post")
     private List<ReplyEntity> replyList = List.of();
 
 }

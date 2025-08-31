@@ -1,6 +1,8 @@
 package com.example.simple_board.reply.db;
 
 
+import com.example.simple_board.post.db.PostEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +20,10 @@ public class ReplyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long postId;
+    @ManyToOne
+    @ToString.Exclude
+    @JsonIgnore
+    private PostEntity post;
 
     private String userName;
 

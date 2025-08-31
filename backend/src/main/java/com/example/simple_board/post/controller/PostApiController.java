@@ -1,6 +1,7 @@
 package com.example.simple_board.post.controller;
 
 import com.example.simple_board.post.db.PostEntity;
+import com.example.simple_board.post.model.PostDto;
 import com.example.simple_board.post.model.PostRequest;
 import com.example.simple_board.post.model.PostViewRequest;
 import com.example.simple_board.post.service.PostService;
@@ -28,7 +29,7 @@ public class PostApiController {
 
     // 게시글 보기
     @PostMapping("view")
-    public PostEntity view(
+    public PostDto view(
             @Valid
             @RequestBody
             PostViewRequest postViewRequest
