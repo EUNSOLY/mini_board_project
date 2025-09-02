@@ -2,7 +2,6 @@ package com.example.simple_board.post.service;
 
 import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.model.PostDto;
-import com.example.simple_board.reply.model.ReplyDto;
 import com.example.simple_board.reply.service.ReplyConveter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
